@@ -57,6 +57,14 @@ Add to head of the file:
 #include "digitizer.h"
 #endif
 //
+// Digitizer/Pointer emulation
+//      7 8 9 U
+//      4 5 6 0
+//      1 2 3
+//      KC_BTN1 ... KC_BTN3
+//      KC_WH_U KC_WH_D KC_WH_L KC_WH_R
+//
+#define DZ_U LT(0, KC_U)
 #define DZ_0 LT(0, KC_0)
 #define DZ_7 LT(0, KC_7)
 #define DZ_8 LT(0, KC_8)
@@ -130,19 +138,28 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   }
 
   switch (keycode) {
+      case LT(0, KC_U):
+          if (record->tap.count && record->event.pressed) {
+              grid_nr = grid_nr / 10;     // Intercept tap function
+              report_grid();
+          } else if (record->event.pressed) {
+                                          // Intercept hold function
+              // no usefull function on hold
+          }
+          return false;
     case LT(0, KC_0):
         if (record->tap.count && record->event.pressed) {
 	    grid_nr = 0;		// Intercept tap function
 	    report_grid();
         } else if (record->event.pressed) {
 					// Intercept hold function
+	    // no usefull function on hold
 	    grid_nr = 0;
         }
 	return false;
     case LT(0, KC_1):
         if (record->tap.count && record->event.pressed) {
 					// Intercept tap function
-					
 	    if(grid_nr < (MAX_GRID_NR / 10)) {
 		grid_nr = grid_nr * 10 + 1;
 	    }
@@ -319,6 +336,7 @@ The 9 sectors are handled by the DZ_1 .. DZ_9 macros.  When you tap the key the
 number is added to grid number.  'DZ_1' 'DZ_5' 'DZ_9' is the sector '159'.  
 After a timeout of 2s the grid number is reset to 0 or 'DZ_0' resets the grid
 number to 0.  
+DZ_U undos the last input, 0123U gives 012.
 
 You can still use the mousekey feature of qmk.
 A long press of the DZ_1 .. DZ_9 keys moves the mouse in this direction.

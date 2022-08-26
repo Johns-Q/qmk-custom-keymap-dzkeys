@@ -25,12 +25,13 @@
 
 
 // Digitizer/Pointer emulation
-//	7 8 9
+//	7 8 9 U
 //	4 5 6 0
 //	1 2 3
 //	KC_BTN1 ... KC_BTN3
 //	KC_WH_U KC_WH_D KC_WH_L KC_WH_R
 //
+#define DZ_U LT(0, KC_U)
 #define DZ_0 LT(0, KC_0)
 #define DZ_7 LT(0, KC_7)
 #define DZ_8 LT(0, KC_8)
@@ -45,7 +46,9 @@
 #ifdef KEYBOARD_annepro2
 
 /* map annepro2 matrix to standard 60% ansi */
+#ifndef LAYOUT_60_ansi
 #define LAYOUT_60_ansi LAYOUT
+#endif
 
 enum anne_pro_layers {
     _BASE_LAYER,
@@ -128,7 +131,7 @@ enum anne_pro_layers {
   */
  [_FN2_LAYER] = LAYOUT_60_ansi(
     KC_TRNS, KC_AP2_BT1, KC_AP2_BT2, KC_AP2_BT3, KC_AP2_BT4, KC_TRNS, KC_TRNS, RGB_HUI, RGB_SAI, RGB_VAI, RGB_SPI, RGB_MOD, RGB_TOG, KC_TRNS,
-    KC_CAPS, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, DZ_7, DZ_8, DZ_9, KC_WH_U, KC_TRNS, KC_TRNS, KC_TRNS,
+    KC_CAPS, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, DZ_U, DZ_7, DZ_8, DZ_9, KC_WH_U, KC_TRNS, KC_TRNS, KC_TRNS,
     MO(_FN2_LAYER), KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, DZ_0, DZ_4, DZ_5, DZ_6, KC_WH_D, KC_TRNS, KC_TRNS,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN2, KC_BTN3, KC_WH_L, DZ_1, DZ_2, DZ_3, KC_WH_R, KC_TRNS,
     KC_TRNS, KC_TRNS, KC_TRNS, KC_BTN1, KC_TRNS, MO(_FN1_LAYER), MO(_FN2_LAYER), KC_TRNS
