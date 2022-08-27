@@ -12,16 +12,26 @@ git clone https://github.com/Johns-Q/qmk-custom-keymap-dzkeys.git
 cd qmk-custom-keymap-dzkeys
 ```
 - Clone the qmk firmware
-As example I use the AnnePro2 repository (for the inclusion in qmk).
+As example I use the qmk mainline repository.
 You need the mainline version or a version which supports the digitizer feature.
 ```
-git clone https://github.com/bwisn/qmk_firmware.git
+git clone https://github.com/qmk/qmk_firmware.git
 ```
 - Setup qmk
 ```
 cd qmk_firmware
 make git-submodule
 ```
+- Alternative way using layout feature: Copy the example files
+```
+mkdir -p layouts/community/60_ansi/dzkeys
+cp -a ../annepro2/* layouts/community/60_ansi/dzkeys
+```
+- Build it
+```
+make annepro2/c18:dzkeys
+```
+
 - Copy the example files
 ```
 mkdir -p keyboards/annepro2/keymaps/dzkeys
@@ -31,6 +41,7 @@ cp -a ../annepro2/* keyboards/annepro2/keymaps/dzkeys/
 ```
 make annepro2/c18:dzkeys
 ```
+
 
 ### Install into existing keymap
 
@@ -445,7 +456,7 @@ int main()
 See also [x11-get-mouse-gridnr.c](x11-get-mouse-gridnr.c)
 
 ```
-gcc -o x11-get-mouse-gridnr.c x11-get-mouse-gridnr.c -lX11
+gcc -o x11-get-mouse-gridnr x11-get-mouse-gridnr.c -lX11
 ./x11-get-mouse-gridnr
 ```
 or
